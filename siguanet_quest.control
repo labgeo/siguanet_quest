@@ -1,0 +1,5 @@
+# siguanet_quest extension
+comment = 'Extension for siguanet databases providing a collection of functions which return aggregate data based on spatial criteria'
+default_version = '1.0'
+relocatable = false
+schema = quest
