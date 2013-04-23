@@ -12708,7 +12708,7 @@ COMMENT ON FUNCTION quest_plantazona_ubicacionespdi(tipo character varying, deno
 SINTAXIS:
 - SELECT * FROM quest_plantazona_ubicacionespdi(''crue'', ''DOCENCIA'', ''00'', ''PB'');';
 
-CREATE FUNCTION quest_plantedificio_obtenerestanciasdocentes(character varying) RETURNS SETOF quest_estancias
+CREATE FUNCTION quest_plantaedificio_obtenerestanciasdocentes(character varying) RETURNS SETOF quest_estancias
     LANGUAGE sql
     AS $_$
 	SELECT * FROM quest_estancias 
