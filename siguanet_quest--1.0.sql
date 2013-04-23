@@ -1885,7 +1885,7 @@ BEGIN
  FOR r IN SELECT * FROM quest_esquemaplantas LOOP
   RETURN QUERY EXECUTE 'SELECT edificios.cod_zona::text || edificios.cod_edificio::text || ' || quote_literal(r.planta) || '::text,' 
                        || quote_literal(r.planta) || '::text,'
-                       || 'edificios.txt_edificio::text || ' || quote_literal('(' || quest_nombreplanta(r) || ')') || '::text,'
+                       || 'edificios.txt_edificio::text || ' || quote_literal('(' || quest_nombreplanta(ROW(r.planta, r.indice)) || ')') || '::text,'
                        || 'edificios.cod_zona::text || edificios.cod_edificio::text,'
                        || 'edificios.txt_edificio::text,'
                        || quest_plantastoarrayexp() || ','
