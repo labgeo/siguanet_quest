@@ -1867,6 +1867,7 @@ LANGUAGE plpgsql VOLATILE;
 CREATE TYPE quest_plantaedificio AS
    (codigo text,
     planta text,
+    denominacion_planta text,
     edificio text,
     denominacion_edificio text,
     checklist_plantas integer[],
