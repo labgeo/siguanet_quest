@@ -1776,7 +1776,7 @@ BEGIN
  ELSIF p.planta LIKE 'p%' THEN
   RETURN 'PLANTA ' || p.indice::text;
  ELSIF p.planta LIKE 's%' THEN
-  RETURN 'SÓTANO ' || p.indice::text;
+  RETURN 'SÓTANO ' || abs(p.indice)::text;
  ELSE
   RETURN '-';
  END IF;
