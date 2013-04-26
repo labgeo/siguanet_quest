@@ -1827,6 +1827,26 @@ END;
 $BODY$
 LANGUAGE plpgsql STABLE;
 
+CREATE FUNCTION quest.quest_edificios()
+  RETURNS SETOF quest.quest_edificio AS
+$BODY$
+DECLARE
+
+BEGIN
+  RETURN QUERY EXECUTE 'SELECT  edificios.cod_zona::text || edificios.cod_edificio::text,'
+                       || 'edificios.txt_edificio::text,'
+                       || quest_plantastoarrayexp() || ','
+                       || 'edificios.visibilidad,'
+                       || 'edificios.rotacion::double precision,'
+                       || 'edificios.traslacion::double precision,'
+                       || 'zonas.cod_zona::text,'
+                       || 'zonas.txt_zona::text'
+                       || ' FROM edificios JOIN zonas ON edificios.cod_zona::text = zonas.cod_zona::text;';
+END;
+$BODY$
+LANGUAGE plpgsql VOLATILE;
+
+
 CREATE FUNCTION quest_plantasbase()
   RETURNS SETOF quest_plantabase AS
 $BODY$
