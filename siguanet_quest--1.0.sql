@@ -1760,6 +1760,16 @@ COMMENT ON FUNCTION quest_edificio_obtenerestanciasutiles(character varying, cha
 Ejemplo:
 SELECT * FROM quest_edificio_obtenerestanciasutiles(''B101'', ''0037'');';
 
+CREATE TYPE quest_edificio AS
+   (codigo text,
+    denominacion_edificio text,
+    checklist_plantas integer[],
+    visibilidad boolean,
+    rotacion double precision,
+    traslacion double precision,
+    zona text,
+    denominacion_zona text);
+
 CREATE TYPE quest_plantabase AS
    (planta text,
     indice integer);
