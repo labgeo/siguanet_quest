@@ -1827,8 +1827,8 @@ END;
 $BODY$
 LANGUAGE plpgsql STABLE;
 
-CREATE FUNCTION quest.quest_edificios()
-  RETURNS SETOF quest.quest_edificio AS
+CREATE FUNCTION quest_edificios()
+  RETURNS SETOF quest_edificio AS
 $BODY$
 DECLARE
 
@@ -18205,11 +18205,12 @@ CREATE FUNCTION quest_zona_obtenerdespachosocupados(character varying, character
 	AND codzona = $2;
 $_$;
 
-CREATE FUNCTION quest_zona_obteneredificios(character varying) RETURNS SETOF public.edificios
-    LANGUAGE sql
-    AS $_$
-	SELECT * FROM edificios WHERE cod_zona = $1 ORDER BY cod_edificio;
-$_$;
+CREATE FUNCTION quest_zona_obteneredificios(character varying)
+  RETURNS SETOF quest_edificio AS
+$BODY$
+	SELECT * FROM quest_edificios() WHERE zona = $1 ORDER BY codigo;
+$BODY$
+LANGUAGE sql VOLATILE;
 
 CREATE FUNCTION quest_zona_obteneredificios(character varying, character varying) RETURNS SETOF public.edificios
     LANGUAGE sql
