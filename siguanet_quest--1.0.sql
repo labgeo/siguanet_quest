@@ -1819,13 +1819,13 @@ BEGIN
   ELSE
    arrayexp := arrayexp || ',';
   END IF;
-  arrayexp := arrayexp || '[' || r.indice || ',' || r.table_name || '.' || quote_ident(r.column_name) || '::int]';
+  arrayexp := arrayexp || r.indice || ',' || r.table_name || '.' || quote_ident(r.column_name) || '::int';
  END LOOP;
  arrayexp := arrayexp || '] ';
  RETURN arrayexp;
 END;
 $BODY$
-LANGUAGE plpgsql STABLE;
+  LANGUAGE plpgsql STABLE;
 
 CREATE FUNCTION quest_edificios()
   RETURNS SETOF quest_edificio AS
