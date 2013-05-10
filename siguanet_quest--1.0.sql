@@ -19961,7 +19961,7 @@ COMMENT ON TABLE quest_adminroles IS 'Nombres de roles de grupo con privilegio d
 
 
 CREATE VIEW quest_estancias_label AS
-    SELECT todasestancias.codigo, (public.st_pointonsurface(todasestancias.geometria))::public.geometry(Point,23030) AS pointonsurface FROM public.todasestancias WHERE (NOT (todasestancias.actividad = ANY (ARRAY[20, 80, 91, 92, 93, 96, 97, 98])));
+    SELECT todasestancias.codigo, (public.st_pointonsurface(todasestancias.geometria)) AS pointonsurface FROM public.todasestancias WHERE (NOT (todasestancias.actividad = ANY (ARRAY[20, 80, 91, 92, 93, 96, 97, 98])));
 
 COMMENT ON VIEW quest_estancias_label IS 'Vista de apoyo para generación de etiquetas de código SIGUANET';
 
