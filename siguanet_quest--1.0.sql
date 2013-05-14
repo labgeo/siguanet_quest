@@ -18610,7 +18610,7 @@ SELECT * FROM quest_zona_obtenerplantas(''crue'',''DOCENCIA'', ''00'');';
 CREATE FUNCTION quest_zona_obtenerplantasedificio(character varying) RETURNS SETOF quest_plantaedificio
     LANGUAGE sql
     AS $_$
-	SELECT * FROM quest_plantasedificio()() WHERE zona = $1 ORDER BY zona, edificio, indice;
+	SELECT * FROM quest_plantasedificio() WHERE zona = $1 ORDER BY zona, edificio, indice;
 $_$;
 
 CREATE FUNCTION quest_zona_superficie(character varying) RETURNS double precision
