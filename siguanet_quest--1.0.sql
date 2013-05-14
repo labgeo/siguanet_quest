@@ -18212,30 +18212,34 @@ $BODY$
 $BODY$
 LANGUAGE sql VOLATILE;
 
-CREATE FUNCTION quest_zona_obteneredificios(character varying, character varying) RETURNS SETOF public.edificios
-    LANGUAGE sql
-    AS $_$
-	SELECT DISTINCT ed.* FROM edificios ed JOIN todasestancias e ON ed.cod_zona || ed.cod_edificio = substring(e.codigo FROM 1 FOR 4)
-	WHERE ed.cod_zona = $1 AND e.coddpto = $2 
-	ORDER BY ed.cod_edificio;
-$_$;
+CREATE FUNCTION quest_zona_obteneredificios(character varying, character varying) 
+  RETURNS SETOF quest_edificio AS 
+$BODY$
+        SELECT DISTINCT ed.* FROM quest_edificios() ed JOIN 
+         todasestancias e ON ed.codigo = substring(e.codigo FROM 1 FOR 4)
+         WHERE ed.zona = $1 AND e.coddpto = $2
+         ORDER BY ed.codigo;
+$BODY$
+LANGUAGE sql VOLATILE;
 
-CREATE FUNCTION quest_zona_obteneredificios(character varying, integer) RETURNS SETOF public.edificios
-    LANGUAGE sql
-    AS $_$
-	SELECT ed.* FROM edificios ed JOIN 
-         (SELECT substring(codigo FROM 1 FOR 4) AS edificio FROM todasestancias WHERE substring(codigo FROM 1 FOR 2) = $1 AND actividad = $2 GROUP BY 1) e 
-         ON ed.cod_zona || ed.cod_edificio = e.edificio
-	 ORDER BY ed.cod_edificio;
-$_$;
+CREATE FUNCTION quest_zona_obteneredificios(character varying, integer) 
+    RETURNS SETOF quest_edificio AS 
+$BODY$
+        SELECT ed.* FROM quest_edificios() ed JOIN 
+         (SELECT substring(codigo FROM 1 FOR 4) AS edificio FROM todasestancias 
+           WHERE substring(codigo FROM 1 FOR 2) = $1 AND actividad = $2 GROUP BY 1) e 
+         ON ed.codigo = e.edificio
+         ORDER BY ed.codigo;
+$BODY$
+LANGUAGE sql VOLATILE;
 
-CREATE FUNCTION quest_zona_obteneredificios(tipo character varying, denominacion character varying, zona character varying) RETURNS SETOF public.edificios
+CREATE FUNCTION quest_zona_obteneredificios(tipo character varying, denominacion character varying, zona character varying) RETURNS SETOF quest_edificio
     LANGUAGE plpgsql
     AS $$
 DECLARE
   validacion integer;
   c refcursor;
-  edificio edificios%ROWTYPE;
+  edificio quest_edificio;
   tipo_ varchar;
 BEGIN
  SELECT quest_validacion_grupoactividad(tipo, denominacion) INTO validacion;
@@ -18245,11 +18249,11 @@ BEGIN
         WHEN 'crue' THEN 'denocrue'
         WHEN 'u21' THEN 'denou21'
         END;
-  OPEN c FOR EXECUTE 'SELECT ed.* FROM edificios ed JOIN 
+  OPEN c FOR EXECUTE 'SELECT ed.* FROM quest_edificios() ed JOIN 
                        (SELECT substring(codigo FROM 1 FOR 4) AS edificio FROM quest_estancias 
                          WHERE substring(codigo FROM 1 FOR 2) = ' || quote_literal(zona) || 
                          ' AND lower(' || quote_ident(lower(tipo_)) || ') = ' || quote_literal(lower(denominacion)) || ' GROUP BY 1) e 
-                       ON ed.cod_zona || ed.cod_edificio = e.edificio ORDER BY ed.cod_edificio;';
+                       ON ed.codigo = e.edificio ORDER BY ed.codigo;';
   LOOP
    FETCH c INTO edificio;
    EXIT WHEN NOT FOUND;
