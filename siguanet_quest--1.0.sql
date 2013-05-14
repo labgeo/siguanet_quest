@@ -18554,7 +18554,7 @@ CREATE FUNCTION quest_zona_obtenerplantas(character varying, character varying) 
     AS $_$
 	SELECT DISTINCT planta FROM
 	(SELECT p.planta 
-	FROM quest_plantaszona() p JOIN todasestancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = substring(e.codigo FROM 5 FOR 2)
+	FROM quest_plantaszona() p JOIN todasestancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = lower(substring(e.codigo FROM 5 FOR 2))
 	WHERE p.zona = $1 AND e.coddpto = $2
 	ORDER BY indice) AS foo;
 $_$;
@@ -18563,7 +18563,7 @@ CREATE FUNCTION quest_zona_obtenerplantas(character varying, integer) RETURNS SE
     LANGUAGE sql
     AS $_$
 	SELECT p.planta
-	FROM quest_plantaszona() p JOIN todasestancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = substring(e.codigo FROM 5 FOR 2)
+	FROM quest_plantaszona() p JOIN todasestancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = lower(substring(e.codigo FROM 5 FOR 2))
 	WHERE p.zona = $1 AND e.actividad = $2
 	GROUP BY p.planta, p.indice
 	ORDER BY p.indice;
@@ -18587,7 +18587,7 @@ BEGIN
         WHEN 'u21' THEN 'denou21'
         END;
   OPEN c FOR EXECUTE 'SELECT p.planta FROM quest_plantaszona() p 
-                       JOIN quest_estancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = substring(e.codigo FROM 5 FOR 2)
+                       JOIN quest_estancias e ON p.zona = substring(e.codigo FROM 1 FOR 2) AND p.planta = lower(substring(e.codigo FROM 5 FOR 2))
 	               WHERE p.zona = ' || quote_literal(zona) || ' AND lower(e.' || quote_ident(lower(tipo_)) || ') = ' || quote_literal(lower(denominacion)) ||
 	               ' GROUP BY p.planta, p.indice
 	                 ORDER BY p.indice;';
