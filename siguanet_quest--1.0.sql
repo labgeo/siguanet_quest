@@ -15094,7 +15094,7 @@ CREATE FUNCTION quest_ua_obtenerplantas(character varying) RETURNS SETOF text
     LANGUAGE sql
     AS $_$
 	SELECT DISTINCT planta FROM
-	(SELECT p.planta FROM quest_plantasbase() p JOIN todasestancias e ON p.planta = substring(e.codigo FROM 5 FOR 2)
+	(SELECT p.planta FROM quest_plantasbase() p JOIN todasestancias e ON p.planta = lower(substring(e.codigo FROM 5 FOR 2))
 	WHERE e.coddpto = $1
 	ORDER BY p.indice) AS foo;
 $_$;
@@ -15103,7 +15103,7 @@ CREATE FUNCTION quest_ua_obtenerplantas(integer) RETURNS SETOF text
     LANGUAGE sql
     AS $_$
 	 SELECT p.planta FROM quest_plantasbase() p JOIN 
-          (SELECT substring(codigo FROM 5 FOR 2) AS planta FROM todasestancias WHERE actividad = $1) e
+          (SELECT lower(substring(codigo FROM 5 FOR 2)) AS planta FROM todasestancias WHERE actividad = $1) e
           ON p.planta = e.planta
           GROUP BY p.planta, p.indice
 	  ORDER BY p.indice;
@@ -15126,7 +15126,7 @@ BEGIN
         WHEN 'u21' THEN 'denou21'
         END;
   OPEN c FOR EXECUTE 'SELECT p.planta FROM quest_plantasbase() p JOIN 
-                       (SELECT substring(codigo FROM 5 FOR 2) AS planta FROM quest_estancias 
+                       (SELECT lower(substring(codigo FROM 5 FOR 2)) AS planta FROM quest_estancias 
                          WHERE lower(' || quote_ident(lower(tipo_)) || ') = ' || quote_literal(lower(denominacion)) || ') e
                        ON p.planta = e.planta GROUP BY p.planta, p.indice ORDER BY p.indice;';
   LOOP
