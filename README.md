@@ -4,8 +4,8 @@ siguanet_quest
 PostgreSQL extension for [SIGUANET](https://github.com/labgeo/siguanet-dbsetup) geodatabases providing functions which return aggregate data based on spatial criteria.
 
 ## What's SIGUANET?
-SIGUANET is a free software project that aims to share the University of Alicante's corporate built asset management technology (SIGUA) with the developers community.
-In this sense, SIGUANET will hopefully be useful for other universities and academic organizations.
+[SIGUANET](https://github.com/labgeo/siguanet-dbsetup) is a free software project that aims to share the University of Alicante's corporate built asset management technology ([SIGUA](http://www.siagua.ua.es)) with the developers community.
+In this sense, [SIGUANET](https://github.com/labgeo/siguanet-dbsetup) will hopefully be useful for other universities and academic organizations.
 
 ## What's siguanet_quest
 This is a set of plpgsql functions specifically designed for reporting information coming from a SIGUANET geodatabase at different levels of spatial aggregation.
