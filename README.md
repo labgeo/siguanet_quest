@@ -23,10 +23,14 @@ A working [SIGUANET](https://github.com/labgeo/siguanet-dbsetup) database is nee
 This is a PostgreSQL extension, so you'll need root access to your database server in order to copy the script and control files into the appropriate `SHAREDIR/extension` directory.
 If your server has only one PostgreSQL installation, or you wish to place this extension on your first installation, things are easy:
 just clone or download *siguanet_quest*, cd to the sources dir and execute:  
-`make install`  
+```shell
+$ make install
+```  
   
 Once *siguanet_quest* is available at your PostgreSQL server, connect to your [SIGUANET](https://github.com/labgeo/siguanet-dbsetup) database and run:
-`CREATE EXTENSION siguanet_quest;`  
+```shell
+# CREATE EXTENSION siguanet_quest;
+```  
   
 You should get a brand new schema named *quest* holding several hundreds of functions, as well as some views and types.  
 You'll also find a table named *quest_adminroles* where administrators should add group roles which have authorisation for viewing unencrypted protected data.
