@@ -28,9 +28,9 @@ $ make install
 ```  
   
 Once *siguanet_quest* is available at your PostgreSQL server, connect to your [SIGUANET](https://github.com/labgeo/siguanet-dbsetup) database and run:
-```shell
+```sql
 # CREATE EXTENSION siguanet_quest;
-```  
+```
   
 You should get a brand new schema named *quest* holding several hundreds of functions, as well as some views and types.  
 You'll also find a table named *quest_adminroles* where administrators should add group roles which have authorisation for viewing unencrypted protected data.
